@@ -6,28 +6,31 @@ namespace LiveComponents
 {
     public class ComponentHub : Hub
     {
-        private IComponent Component { get; }
+        private ComponentRegistry Components { get; }
+
         public ComponentHub(ComponentRegistry components)
         {
-            Component = components.FindComponent("counter");
+            Components = components;
         }
 
-        public Task CallAction(string action)
+        public Task CallAction(string path, string action)
         {
-            var type = Component.GetType();
+            var component = Components.FindComponent(path);
 
-            Component.CallMethod(action);
+            var type = component.GetType();
+
+            component.CallMethod(action);
 
             var result = $@"
             <html>
                 <head>
                     <title>{type.ToString()}</title>
-                    <script src='/lib/morphdom.js'></script>
-                    <script src='/lib/signalr.min.js'></script>
-                    <script src='/test.js'></script>
+                    <script src='/js/morphdom.js'></script>
+                    <script src='/js/signalr.min.js'></script>
+                    <script src='/js/livecomponents.js'></script>
                 </head>
                 <body>
-                    {Component.Render()}
+                    {component.Render()}
                 </body>
             </html>
             ";

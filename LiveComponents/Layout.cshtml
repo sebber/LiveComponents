@@ -1,0 +1,15 @@
+﻿@model LiveComponents.Model
+
+<html>
+<head>
+    <title></title>
+    <script src="~/js/morphdom.js"></script>
+    <script src="~/js/signalr.min.js.js"></script>
+    <script src="~/js/livecomponents.js"></script>
+</head>
+    <body>
+        <div live-component-main>
+            @Model.Body
+        </div>
+    </body>
+</html>

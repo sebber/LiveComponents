@@ -1,8 +1,9 @@
 ﻿using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LiveComponents.Samples.Counter
 {
-    public class CounterComponent : BaseComponent, IComponent
+    public class CounterComponent : IComponent
     {
         public int Count { get; set; }
 
@@ -16,7 +17,7 @@ namespace LiveComponents.Samples.Counter
             Count--;
         }
 
-        public override string Render()
+        public string Render()
         {
             return $@"
                 <h1>Counter</h1>

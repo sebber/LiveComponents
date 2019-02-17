@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace LiveComponents.Samples.Counter
+namespace LiveComponents.Samples.Todo
 {
     public class Program
     {

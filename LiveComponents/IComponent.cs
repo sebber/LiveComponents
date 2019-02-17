@@ -1,10 +1,10 @@
 ﻿using System;
+using Microsoft.AspNetCore.Mvc;
+
 namespace LiveComponents
 {
     public interface IComponent
     {
-        void CallMethod(string methodName);
-
         string Render();
     }
 }

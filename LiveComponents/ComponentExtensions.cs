@@ -22,7 +22,7 @@ namespace LiveComponents
 
             builder.UseSignalR(routes =>
             {
-                routes.MapHub<ComponentHub>($"/{path}Hub");
+                routes.MapHub<ComponentHub>($"/componentHub");
             });
 
             return builder;
@@ -32,7 +32,19 @@ namespace LiveComponents
         {
             services.AddSingleton<ComponentRegistry>();
 
+            services.ConfigureOptions(typeof(UIConfigureOptions));
+
             return services;
+        }
+
+        public static void CallMethod(this IComponent component, string methodName)
+        {
+            var method = component.GetType().GetMethod(methodName);
+
+            if (method != null)
+            {
+                method.Invoke(component, null);
+            }
         }
     }
 }

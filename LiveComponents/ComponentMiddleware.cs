@@ -20,9 +20,8 @@ namespace LiveComponents
             if (context.Request.Headers.ContainsKey("LIVE-COMPONENT-ACTION"))
             {
                 var action = context.Request.Headers["LIVE-COMPONENT-ACTION"];
-                var method = type.GetMethod(action);
 
-                method.Invoke(_component, null);
+                _component.CallMethod(action);
             }
 
 
@@ -30,9 +29,9 @@ namespace LiveComponents
             <html>
                 <head>
                     <title>{type.ToString()}</title>
-                    <script src='/lib/morphdom.js'></script>
-                    <script src='/lib/signalr.min.js'></script>
-                    <script src='/test.js'></script>
+                    <script src='/js/morphdom.js'></script>
+                    <script src='/js/signalr.min.js'></script>
+                    <script src='/js/livecomponents.js'></script>
                 </head>
                 <body>
                     {_component.Render()}

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LiveComponents.Samples.Counter
+namespace LiveComponents.Samples.Todo
 {
     public class Startup
     {
@@ -34,7 +34,7 @@ namespace LiveComponents.Samples.Counter
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
 
-            app.UseLiveComponent<CounterComponent>("counter");
+            app.UseLiveComponent<TodoComponent>("todo");
 
             app.MapWhen(
                 context => context.Request.Path.ToString().Equals(""),
