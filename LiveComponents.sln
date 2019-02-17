@@ -1,0 +1,28 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveComponents", "LiveComponents\LiveComponents.csproj", "{07AEABEF-4EC9-40F3-AC74-00B46C34BFA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LiveComponents.Samples", "LiveComponents.Samples", "{F78365C0-BC91-4FD1-93D2-0020ECAB58C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveComponents.Samples.Counter", "LiveComponents.Samples.Counter\LiveComponents.Samples.Counter.csproj", "{20C62136-2ECD-4E14-AE27-4FE9BE95EF22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07AEABEF-4EC9-40F3-AC74-00B46C34BFA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07AEABEF-4EC9-40F3-AC74-00B46C34BFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07AEABEF-4EC9-40F3-AC74-00B46C34BFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07AEABEF-4EC9-40F3-AC74-00B46C34BFA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C62136-2ECD-4E14-AE27-4FE9BE95EF22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C62136-2ECD-4E14-AE27-4FE9BE95EF22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C62136-2ECD-4E14-AE27-4FE9BE95EF22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C62136-2ECD-4E14-AE27-4FE9BE95EF22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{20C62136-2ECD-4E14-AE27-4FE9BE95EF22} = {F78365C0-BC91-4FD1-93D2-0020ECAB58C4}
+	EndGlobalSection
+EndGlobal
