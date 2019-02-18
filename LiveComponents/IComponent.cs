@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-
-namespace LiveComponents
+﻿namespace LiveComponents
 {
     public interface IComponent
     {

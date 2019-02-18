@@ -22,17 +22,9 @@ namespace LiveComponents
             component.CallMethod(action);
 
             var result = $@"
-            <html>
-                <head>
-                    <title>{type.ToString()}</title>
-                    <script src='/js/morphdom.js'></script>
-                    <script src='/js/signalr.min.js'></script>
-                    <script src='/js/livecomponents.js'></script>
-                </head>
-                <body>
-                    {component.Render()}
-                </body>
-            </html>
+            <div live-component=""{path}"">
+               {component.Render()}
+            </div>
             ";
 
             return Clients.All.SendAsync("RenderComponent", result);

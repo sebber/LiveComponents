@@ -1,4 +1,10 @@
-﻿window.onload = () => {
+﻿const liveComponents = () =>
+  Array.from(document.querySelectorAll("[live-component]"));
+
+const clickableParts = component =>
+  Array.from(component.querySelectorAll("[live-component-click]"));
+
+window.onload = () => {
   const connection = new signalR.HubConnectionBuilder()
     .withUrl("/componentHub")
     .build();
@@ -16,25 +22,28 @@
   const clickers = document.querySelectorAll("[live-component-click]");
   console.log("clickers", clickers);
 
-  Array.from(clickers).map(element => {
-    element.onclick = () => {
-      const action = element.getAttribute("live-component-click");
+  liveComponents().map(component => {
+    const componentName = component.getAttribute("live-component");
 
-      connection.invoke("CallAction", window.location.pathname.substring(1), action);
+    clickableParts(component).map(part => {
+      part.onclick = () => {
+        const action = part.getAttribute("live-component-click");
 
-      /*
-      fetch(window.location.href, {
-        headers: {
-          "LIVE-COMPONENT-ACTION": action
-        }
-      })
-        .then(response => response.text())
-        .then(html => {
-          const doc = document.querySelector("html");
-          morphdom(doc, html);
-        });
-        */
-    };
+        connection.invoke("CallAction", componentName, action);
+
+        /*
+        fetch(window.location.href, {
+          headers: {
+            "LIVE-COMPONENT-ACTION": action
+          }
+        })
+          .then(response => response.text())
+          .then(html => {
+            const doc = document.querySelector("html");
+            morphdom(doc, html);
+          });
+          */
+      };
+    });
   });
 };
-

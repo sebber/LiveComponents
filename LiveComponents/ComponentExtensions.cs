@@ -17,7 +17,7 @@ namespace LiveComponents
 
             builder.MapWhen(
                 context => context.Request.Path.ToString().EndsWith(path),
-                app => app.UseMiddleware<ComponentMiddleware>(component)
+                app => app.UseMiddleware<ComponentMiddleware>(path, component)
             );
 
             builder.UseSignalR(routes =>

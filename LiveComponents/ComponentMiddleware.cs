@@ -8,9 +8,12 @@ namespace LiveComponents
     {
         IComponent _component;
 
-        public ComponentMiddleware(RequestDelegate next, IComponent component)
+        string _path;
+
+        public ComponentMiddleware(RequestDelegate next, string path, IComponent component)
         {
             _component = component;
+            _path = path;
         }
 
         public async Task Invoke(HttpContext context)
@@ -34,7 +37,9 @@ namespace LiveComponents
                     <script src='/js/livecomponents.js'></script>
                 </head>
                 <body>
-                    {_component.Render()}
+                    <div live-component=""{_path}"">
+                       {_component.Render()}
+                    </div>
                 </body>
             </html>
             ";
