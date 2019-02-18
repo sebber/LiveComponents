@@ -8,12 +8,12 @@ namespace LiveComponents
     {
         IComponent _component;
 
-        string _path;
+        string _id;
 
-        public ComponentMiddleware(RequestDelegate next, string path, IComponent component)
+        public ComponentMiddleware(RequestDelegate next, string id, IComponent component)
         {
             _component = component;
-            _path = path;
+            _id = id;
         }
 
         public async Task Invoke(HttpContext context)
@@ -31,13 +31,14 @@ namespace LiveComponents
             var result = $@"
             <html>
                 <head>
+                    <meta charset=""utf-8"">
                     <title>{type.ToString()}</title>
-                    <script src='/js/morphdom.js'></script>
-                    <script src='/js/signalr.min.js'></script>
-                    <script src='/js/livecomponents.js'></script>
+                    <script src=""/js/morphdom.js""></script>
+                    <script src=""/js/signalr.min.js""></script>
+                    <script src=""/js/livecomponents.js""></script>
                 </head>
                 <body>
-                    <div live-component=""{_path}"">
+                    <div live-component=""{_id}"">
                        {_component.Render()}
                     </div>
                 </body>

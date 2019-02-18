@@ -47,20 +47,27 @@ const parseAction = value => {
   );
 };
 
+const connection = new signalR.HubConnectionBuilder()
+  .withUrl("/componentHub")
+  .build();
+
+connection.on("RenderComponent", (id, html) => {
+  const selector = "[live-component='" + id + "']";
+
+  const newComponent = document.createElement("div");
+  newComponent.setAttribute("live-component", id);
+  newComponent.innerHTML = html;
+
+  morphdom(document.querySelector([selector]), newComponent);
+});
+
+connection
+  .start()
+  .then(() => console.log("Connection started"))
+  .catch(err => console.error(err));
+
 window.onload = () => {
-  const connection = new signalR.HubConnectionBuilder()
-    .withUrl("/componentHub")
-    .build();
-
-  connection.on("RenderComponent", html => {
-    const doc = document.querySelector("html");
-    morphdom(doc, html);
-  });
-
-  connection
-    .start()
-    .then(() => console.log("Connection started"))
-    .catch(err => console.error(err));
+  console.log(document.querySelector("[live-component='counter']"));
 
   const clickers = document.querySelectorAll("[live-component-click]");
   console.log("clickers", clickers);
@@ -72,31 +79,33 @@ window.onload = () => {
       part.onclick = () => {
         const action = parseAction(part.getAttribute("live-component-click"));
 
-        const modelKeys = Object.getOwnPropertyNames(action.params);
+        if (action.params) {
+          const modelKeys = Object.getOwnPropertyNames(action.params);
 
-        /*
-         * This will be the cool named propertys way of doing things
-        const values = modelKeys
-          .map(key =>
-            component.querySelector("[live-component-model='" + key + "']")
-          )
-          .map(input => ({
-            [input.getAttribute("live-component-model")]: getValue(input)
-          }));
+          /*
+          * This will be the cool named propertys way of doing things
+          const values = modelKeys
+            .map(key =>
+              component.querySelector("[live-component-model='" + key + "']")
+            )
+            .map(input => ({
+              [input.getAttribute("live-component-model")]: getValue(input)
+            }));
 
-        action.params = values;
-        */
+          action.params = values;
+          */
 
-        /*
-       * This will be the simpler array way of doing things
-       * */
-        const values = modelKeys
-          .map(key =>
-            component.querySelector("[live-component-model='" + key + "']")
-          )
-          .map(input => getValue(input));
+          /*
+           * This will be the simpler array way of doing things
+           * */
+          const values = modelKeys
+            .map(key =>
+              component.querySelector("[live-component-model='" + key + "']")
+            )
+            .map(input => getValue(input));
 
-        action.params = values;
+          action.params = values;
+        }
 
         connection.invoke("CallAction", componentName, {
           Name: action.name,

@@ -34,7 +34,7 @@ namespace LiveComponents.Samples.Counter
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
 
-            app.UseLiveComponent<CounterComponent>("counter");
+            app.UseLiveComponent<CounterComponent>("counter", true);
 
             app.MapWhen(
                 context => context.Request.Path.ToString().Equals(""),

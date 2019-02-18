@@ -13,19 +13,13 @@ namespace LiveComponents
             Components = components;
         }
 
-        public Task CallAction(string path, Action action)
+        public Task CallAction(string id, Action action)
         {
-            var component = Components.FindComponent(path);
+            var component = Components.FindComponent(id);
 
             component.CallMethod(action.Name, action.Parameters);
 
-            var result = $@"
-            <div live-component=""{path}"">
-               {component.Render()}
-            </div>
-            ";
-
-            return Clients.All.SendAsync("RenderComponent", result);
+            return Clients.All.SendAsync("RenderComponent", id, component.Render());
         }
 
         public class Action

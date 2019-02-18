@@ -7,19 +7,22 @@ namespace LiveComponents
 {
     public static class ComponentExtensions
     {
-        public static IApplicationBuilder UseLiveComponent<T>(this IApplicationBuilder builder, string path)
+        public static IApplicationBuilder UseLiveComponent<T>(this IApplicationBuilder builder, string id, bool mountPath = false)
             where T : IComponent
         {
             var component = (IComponent)Activator.CreateInstance(typeof(T));
 
             var registry = builder.ApplicationServices.GetService<ComponentRegistry>();
 
-            registry.RegisterComponent(path, component);
+            registry.RegisterComponent(id, component);
 
-            builder.MapWhen(
-                context => context.Request.Path.ToString().EndsWith(path),
-                app => app.UseMiddleware<ComponentMiddleware>(path, component)
-            );
+            if (mountPath)
+            {
+                builder.MapWhen(
+                    context => context.Request.Path.ToString().EndsWith(id, StringComparison.InvariantCulture),
+                    app => app.UseMiddleware<ComponentMiddleware>(id, component)
+                );
+            }
 
             builder.UseSignalR(routes =>
             {
