@@ -13,13 +13,11 @@ namespace LiveComponents
             Components = components;
         }
 
-        public Task CallAction(string path, string action)
+        public Task CallAction(string path, Action action)
         {
             var component = Components.FindComponent(path);
 
-            var type = component.GetType();
-
-            component.CallMethod(action);
+            component.CallMethod(action.Name, action.Parameters);
 
             var result = $@"
             <div live-component=""{path}"">
@@ -28,6 +26,13 @@ namespace LiveComponents
             ";
 
             return Clients.All.SendAsync("RenderComponent", result);
+        }
+
+        public class Action
+        {
+            public string Name { get; set; }
+
+            public object[] Parameters { get; set; }
         }
     }
 }

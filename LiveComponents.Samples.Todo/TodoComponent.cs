@@ -12,9 +12,9 @@ namespace LiveComponents.Samples.Todo
             Todos = new List<string>();
         }
 
-        public void AddTodo()
+        public void AddTodo(string title)
         {
-            Todos.Add("New Todo");
+            Todos.Add(title);
         }
 
         public string Render()
@@ -23,8 +23,9 @@ namespace LiveComponents.Samples.Todo
 
             return $@"
                 <h1>Todo list</h1>
+                <input type=""text"" live-component-model=""title"" />
+                <button live-component-click=""AddTodo(title)"">Add</button>
                 <ul>{todoList}</ul>
-                <button live-component-click=""AddTodo"">Add</button>
             ";
         }
     }

@@ -24,7 +24,7 @@ namespace LiveComponents
             {
                 var action = context.Request.Headers["LIVE-COMPONENT-ACTION"];
 
-                _component.CallMethod(action);
+                _component.CallMethod(action, null);
             }
 
 

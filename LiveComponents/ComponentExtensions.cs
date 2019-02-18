@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -37,13 +38,13 @@ namespace LiveComponents
             return services;
         }
 
-        public static void CallMethod(this IComponent component, string methodName)
+        public static void CallMethod(this IComponent component, string methodName, object[] parameters)
         {
             var method = component.GetType().GetMethod(methodName);
 
             if (method != null)
             {
-                method.Invoke(component, null);
+                method.Invoke(component, parameters);
             }
         }
     }
