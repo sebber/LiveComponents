@@ -29,8 +29,7 @@ namespace LiveComponents.Samples.ChatRoom
                 <h1>Chatt app</h1>
                 <ul>{messages}</ul>
                 <p>
-                    <input type=""text"" live-component-model=""message"">
-                    <button type=""button"" live-component-click=""SendMessage(message)"">Send</button>
+                    <input type=""text"" live-component-model=""message"" live-component-enter=""SendMessage(message)"">
                 </p>
             ";
         }

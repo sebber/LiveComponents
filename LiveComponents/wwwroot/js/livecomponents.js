@@ -4,6 +4,9 @@
 const clickableParts = component =>
   Array.from(component.querySelectorAll("[live-component-click]"));
 
+const enterableParts = component =>
+  Array.from(component.querySelectorAll("[live-component-enter]"));
+
 const modelParts = component =>
   Array.from(component.querySelectorAll("[live-component-model]"));
 
@@ -66,6 +69,8 @@ connection
   .then(() => console.log("Connection started"))
   .catch(err => console.error(err));
 
+const callAction = action => {};
+
 window.onload = () => {
   console.log(document.querySelector("[live-component='counter']"));
 
@@ -74,6 +79,79 @@ window.onload = () => {
 
   liveComponents().map(component => {
     const componentName = component.getAttribute("live-component");
+
+    enterableParts(component).map(part => {
+      part.addEventListener("keyup", e => {
+        // part == document.activeElement
+
+        if (e.key == "Enter") {
+          const action = parseAction(part.getAttribute("live-component-enter"));
+
+          if (action.params) {
+            const modelKeys = Object.getOwnPropertyNames(action.params);
+
+            /*
+            * This will be the cool named propertys way of doing things
+            const values = modelKeys
+              .map(key =>
+                component.querySelector("[live-component-model='" + key + "']")
+              )
+              .map(input => ({
+                [input.getAttribute("live-component-model")]: getValue(input)
+              }));
+  
+            action.params = values;
+            */
+
+            /*
+             * This will be the simpler array way of doing things
+             * */
+            const values = modelKeys
+              .map(key =>
+                component.querySelector("[live-component-model='" + key + "']")
+              )
+              .map(input => getValue(input));
+
+            action.params = values;
+          }
+
+          connection.invoke("CallAction", componentName, {
+            Name: action.name,
+            Parameters: action.params
+          });
+
+          /*
+          const data = modelParts(component).map(el => ({
+            name: el.getAttribute("live-component-model"),
+            value: getValue(el)
+          }));
+          */
+
+          /*
+          const data = modelParts(component).map(el => getValue(el));
+          console.log("parameters", data);
+
+          connection.invoke("CallAction", componentName, {
+            Name: action,
+            Parameters: data.length > 0 ? data : undefined
+          });
+          */
+
+          /*
+          fetch(window.location.href, {
+            headers: {
+              "LIVE-COMPONENT-ACTION": action
+            }
+          })
+            .then(response => response.text())
+            .then(html => {
+              const doc = document.querySelector("html");
+              morphdom(doc, html);
+            });
+            */
+        }
+      });
+    });
 
     clickableParts(component).map(part => {
       part.onclick = () => {
