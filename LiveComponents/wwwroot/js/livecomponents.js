@@ -61,7 +61,9 @@ connection.on("RenderComponent", (id, html) => {
   newComponent.setAttribute("live-component", id);
   newComponent.innerHTML = html;
 
-  morphdom(document.querySelector([selector]), newComponent);
+  Array.from(document.querySelectorAll([selector])).map(oldComponent =>
+    morphdom(oldComponent, newComponent)
+  );
 });
 
 connection

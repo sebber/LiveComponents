@@ -5,7 +5,8 @@
 }
 
 <div class="text-center">
-    <div live-component="chatty">
-        @Html.Raw(Model.Component.Render())
-    </div>
+    <vc:live-component id="chatty"></vc:live-component>
 </div>
+
+@await Component.InvokeAsync("LiveComponent", new { id = "chatty" })
+
