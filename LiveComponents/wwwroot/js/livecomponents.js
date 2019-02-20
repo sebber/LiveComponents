@@ -57,13 +57,13 @@ const connection = new signalR.HubConnectionBuilder()
 connection.on("RenderComponent", (id, html) => {
   const selector = "[live-component='" + id + "']";
 
-  const newComponent = document.createElement("div");
-  newComponent.setAttribute("live-component", id);
-  newComponent.innerHTML = html;
+  Array.from(document.querySelectorAll(selector)).map(oldComponent => {
+    const newComponent = document.createElement("div");
+    newComponent.setAttribute("live-component", id);
+    newComponent.innerHTML = html;
 
-  Array.from(document.querySelectorAll([selector])).map(oldComponent =>
-    morphdom(oldComponent, newComponent)
-  );
+    morphdom(oldComponent, newComponent);
+  });
 });
 
 connection
@@ -74,10 +74,7 @@ connection
 const callAction = action => {};
 
 window.onload = () => {
-  console.log(document.querySelector("[live-component='counter']"));
-
   const clickers = document.querySelectorAll("[live-component-click]");
-  console.log("clickers", clickers);
 
   liveComponents().map(component => {
     const componentName = component.getAttribute("live-component");
